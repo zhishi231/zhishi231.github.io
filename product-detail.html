@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品详情 - 金桥焊材</title>
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入 Font Awesome 图标库 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind CSS 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1E40AF', // 深蓝色作为主色调
+            secondary: '#3B82F6', // 亮蓝色作为辅助色
+            neutral: '#F3F4F6', // 浅灰色作为背景色
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .transition-custom {
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 overflow-x-hidden">
+  <!-- 导航栏 - 复用原有导航栏代码 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <!-- Logo - 跳回首页 -->
+        <a href="index.html" class="flex items-center space-x-2">
+          <span class="text-primary text-3xl"><i class="fa fa-welding-bridge"></i></span>
+          <span class="text-xl font-bold text-primary">金桥焊材</span>
+        </a>
+        
+        <!-- 桌面端导航 -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="index.html#home" class="font-medium text-gray-700 hover:text-primary transition-custom">首页</a>
+          <a href="index.html#products" class="font-medium text-gray-700 hover:text-primary transition-custom">产品中心</a>
+          <a href="index.html#about" class="font-medium text-gray-700 hover:text-primary transition-custom">关于我们</a>
+          <a href="index.html#contact" class="font-medium text-gray-700 hover:text-primary transition-custom">联系我们</a>
+        </nav>
+        
+        <!-- 移动端菜单按钮 -->
+        <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+          <i class="fa fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-3 space-y-3">
+        <a href="index.html#home" class="block py-2 text-gray-700 hover:text-primary transition-custom">首页</a>
+        <a href="index.html#products" class="block py-2 text-gray-700 hover:text-primary transition-custom">产品中心</a>
+        <a href="index.html#about" class="block py-2 text-gray-700 hover:text-primary transition-custom">关于我们</a>
+        <a href="index.html#contact" class="block py-2 text-gray-700 hover:text-primary transition-custom">联系我们</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 产品详情区域 -->
+  <section id="product-detail" class="pt-24 md:pt-32 pb-16 md:pb-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 面包屑导航 -->
+      <div class="mb-8 text-sm text-gray-500">
+        <a href="index.html" class="hover:text-primary">首页</a>
+        <span class="mx-2">/</span>
+        <a href="index.html#products" class="hover:text-primary">产品中心</a>
+        <span class="mx-2">/</span>
+        <span id="product-breadcrumb" class="text-primary">手工电弧焊焊条</span>
+      </div>
+      
+      <div class="flex flex-col lg:flex-row gap-10">
+        <!-- 产品图片 -->
+        <div class="lg:w-1/2">
+          <div class="rounded-xl shadow-lg overflow-hidden">
+            <img id="product-main-img" src="https://picsum.photos/id/119/800/600" alt="产品图片" class="w-full h-auto object-cover">
+          </div>
+          <!-- 产品缩略图 -->
+          <div class="grid grid-cols-4 gap-4 mt-4">
+            <img src="https://picsum.photos/id/119/200/150" alt="产品缩略图1" class="rounded-lg cursor-pointer hover:opacity-80">
+            <img src="https://picsum.photos/id/120/200/150" alt="产品缩略图2" class="rounded-lg cursor-pointer hover:opacity-80">
+            <img src="https://picsum.photos/id/121/200/150" alt="产品缩略图3" class="rounded-lg cursor-pointer hover:opacity-80">
+            <img src="https://picsum.photos/id/122/200/150" alt="产品缩略图4" class="rounded-lg cursor-pointer hover:opacity-80">
+          </div>
+        </div>
+        
+        <!-- 产品信息 -->
+        <div class="lg:w-1/2">
+          <h1 id="product-title" class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-gray-900 mb-4">手工电弧焊焊条</h1>
+          <div class="mb-6">
+            <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-2">正品保障</span>
+            <span class="inline-block px-3 py-1 bg-green-10 text-green-600 rounded-full text-sm font-medium mb-2">库存充足</span>
+          </div>
+          
+          <div class="text-2xl font-bold text-gray-900 mb-6" id="product-price">
+            ¥ <span id="price-value">0.00</span> / 件
+          </div>
+          
+          <div class="border-t border-b border-gray-200 py-6 mb-6">
+            <h3 class="font-semibold text-lg mb-3">产品简介</h3>
+            <p id="product-desc" class="text-gray-600 mb-4">
+              适用于各种碳钢、低合金钢的焊接，具有优良的工艺性能和力学性能。电弧稳定，飞溅小，脱渣容易，焊缝成型美观。
+            </p>
+          </div>
+          
+          <!-- 产品参数 -->
+          <div class="mb-8">
+            <h3 class="font-semibold text-lg mb-4">产品参数</h3>
+            <div id="product-params" class="space-y-3 text-gray-600">
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span>型号规格</span>
+                <span id="param-spec">J422, J507, J506</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span>直径</span>
+                <span id="param-diameter">2.5mm, 3.2mm, 4.0mm, 5.0mm</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span>长度</span>
+                <span id="param-length">300mm, 350mm, 400mm</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span>适用母材</span>
+                <span id="param-material">低碳钢、低合金钢</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span>执行标准</span>
+                <span id="param-standard">GB/T 5117-2012</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 操作按钮 -->
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="index.html#contact" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-custom text-center">
+              立即咨询
+            </a>
+            <a href="index.html#products" class="px-8 py-3 border border-primary text-primary hover:bg-primary/5 font-medium rounded-lg transition-custom text-center">
+              返回产品列表
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 产品详情标签页 -->
+      <div class="mt-16">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8">
+            <button id="tab-detail" class="py-4 px-1 border-b-2 border-primary text-primary font-medium">产品详情</button>
+            <button id="tab-spec" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">技术规格</button>
+            <button id="tab-faq" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">常见问题</button>
+          </nav>
+        </div>
+        
+        <!-- 产品详情内容 -->
+        <div id="content-detail" class="py-8">
+          <div id="detail-content" class="prose max-w-none text-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">手工电弧焊焊条详细介绍</h3>
+            <p class="mb-4">
+              本系列手工电弧焊焊条采用优质原材料和先进工艺制造，具有以下特点：
+            </p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>电弧稳定，引弧容易，焊接过程中飞溅小</li>
+              <li>脱渣性能优良，焊缝成型美观</li>
+              <li>焊缝金属力学性能优良，符合国家标准</li>
+              <li>适用于各种位置的焊接，操作性能好</li>
+            </ul>
+            <p class="mb-4">
+              广泛应用于建筑、桥梁、机械制造、压力容器等行业的碳钢和低合金钢焊接。
+            </p>
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">使用注意事项</h4>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>焊条使用前应按规定温度烘干，烘干后应放在保温筒内随用随取</li>
+              <li>焊接前应清除焊件表面的油污、铁锈、水分等杂质</li>
+              <li>根据焊接母材和焊接位置选择合适的焊接电流</li>
+              <li>焊接时应采取适当的防护措施，防止弧光伤害和有害气体吸入</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- 技术规格内容 (默认隐藏) -->
+        <div id="content-spec" class="py-8 hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">型号</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">抗拉强度 (MPa)</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">屈服强度 (MPa)</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">伸长率 (%)</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">冲击功 (J)</th>
+                </tr>
+              </thead>
+              <tbody id="spec-table" class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J422</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥420</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥330</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥22</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (0℃)</td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J507</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥20</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-20℃)</td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J506</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥20</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-20℃)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- 常见问题内容 (默认隐藏) -->
+        <div id="content-faq" class="py-8 hidden">
+          <div id="faq-content" class="space-y-6">
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 如何选择合适的焊条型号？</h4>
+              <p class="text-gray-600">A: 根据焊接母材的材质、焊接结构的强度要求、焊接环境和焊接位置来选择。低碳钢一般选用J422，低合金钢根据强度要求选用J506/J507等。</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 焊条使用前为什么要烘干？</h4>
+              <p class="text-gray-600">A: 焊条药皮中含有水分，不烘干直接使用会导致焊缝产生气孔、裂纹等缺陷，影响焊接质量。酸性焊条一般烘干温度为75-150℃，碱性焊条为350-400℃。</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 焊条的保质期是多久？</h4>
+              <p class="text-gray-600">A: 在干燥、通风、防潮的储存条件下，未开封的焊条保质期一般为2年。开封后应尽快使用，避免药皮吸潮。</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 不同直径的焊条适用的焊接电流是多少？</h4>
+              <p class="text-gray-600">A: 2.5mm焊条：50-80A；3.2mm焊条：80-120A；4.0mm焊条：120-160A；5.0mm焊条：160-200A。具体电流可根据焊接位置和母材厚度适当调整。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 推荐产品 -->
+  <section class="py-16 bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">推荐产品</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 推荐产品1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom group">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/225/600/400" alt="气体保护焊丝" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">气体保护焊丝</h3>
+            <a href="product-detail.html?type=wire" class="text-primary font-medium text-sm group-hover:underline">查看详情 <i class="fa fa-arrow-right ml-1"></i></a>
+          </div>
+        </div>
+        <!-- 推荐产品2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom group">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/287/600/400" alt="埋弧焊焊材" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">埋弧焊焊材</h3>
+            <a href="product-detail.html?type=submerged" class="text-primary font-medium text-sm group-hover:underline">查看详情 <i class="fa fa-arrow-right ml-1"></i></a>
+          </div>
+        </div>
+        <!-- 推荐产品3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom group">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/123/600/400" alt="特种焊材" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">特种焊材</h3>
+            <a href="product-detail.html?type=special" class="text-primary font-medium text-sm group-hover:underline">查看详情 <i class="fa fa-arrow-right ml-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 - 复用原有页脚代码 -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <span class="text-white text-3xl"><i class="fa fa-welding-bridge"></i></span>
+            <span class="text-xl font-bold text-white">金桥焊材</span>
+          </div>
+          <p class="text-gray-400 mb-6">
+            专业的焊接材料经销商，提供高品质的产品和全方位的技术支持。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-weixin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-weibo"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">快速链接</h3>
+          <ul class="space-y-3">
+            <li><a href="index.html#home" class="text-gray-400 hover:text-white transition-custom">首页</a></li>
+            <li><a href="index.html#products" class="text-gray-400 hover:text-white transition-custom">产品中心</a></li>
+            <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-custom">关于我们</a></li>
+            <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-custom">联系我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">产品分类</h3>
+          <ul class="space-y-3">
+            <li><a href="product-detail.html?type=electrode" class="text-gray-400 hover:text-white transition-custom">手工电弧焊焊条</a></li>
+            <li><a href="product-detail.html?type=wire" class="text-gray-400 hover:text-white transition-custom">气体保护焊丝</a></li>
+            <li><a href="product-detail.html?type=submerged" class="text-gray-400 hover:text-white transition-custom">埋弧焊焊材</a></li>
+            <li><a href="product-detail.html?type=special" class="text-gray-400 hover:text-white transition-custom">特种焊材</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">联系我们</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fa fa-map-marker text-gray-400 mt-1 mr-3"></i>
+              <span class="text-gray-400">上海市奉贤区奉城镇海淀路258号</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-phone text-gray-400 mt-1 mr-3"></i>
+              <span class="text-gray-400">021-57514426        15026635127</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-envelope text-gray-400 mt-1 mr-3"></i>
+              <span class="text-gray-400">1132929943@qq.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-500 mb-4 md:mb-0">
+            &copy; 2023 金桥焊材经销商. 保留所有权利.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-500 hover:text-white transition-custom">隐私政策</a>
+            <a href="#" class="text-gray-500 hover:text-white transition-custom">服务条款</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2', 'shadow');
+        navbar.classList.remove('py-4');
+      } else {
+        navbar.classList.add('py-4');
+        navbar.classList.remove('py-2', 'shadow');
+      }
+    });
+    
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (menuToggle.querySelector('i').classList.contains('fa-bars')) {
+        menuToggle.querySelector('i').classList.remove('fa-bars');
+        menuToggle.querySelector('i').classList.add('fa-times');
+      } else {
+        menuToggle.querySelector('i').classList.remove('fa-times');
+        menuToggle.querySelector('i').classList.add('fa-bars');
+      }
+    });
+    
+    // 标签页切换
+    const tabDetail = document.getElementById('tab-detail');
+    const tabSpec = document.getElementById('tab-spec');
+    const tabFaq = document.getElementById('tab-faq');
+    const contentDetail = document.getElementById('content-detail');
+    const contentSpec = document.getElementById('content-spec');
+    const contentFaq = document.getElementById('content-faq');
+    
+    tabDetail.addEventListener('click', () => {
+      // 切换标签样式
+      tabDetail.classList.add('border-primary', 'text-primary');
+      tabDetail.classList.remove('border-transparent', 'text-gray-500');
+      tabSpec.classList.add('border-transparent', 'text-gray-500');
+      tabSpec.classList.remove('border-primary', 'text-primary');
+      tabFaq.classList.add('border-transparent', 'text-gray-500');
+      tabFaq.classList.remove('border-primary', 'text-primary');
+      
+      // 切换内容显示
+      contentDetail.classList.remove('hidden');
+      contentSpec.classList.add('hidden');
+      contentFaq.classList.add('hidden');
+    });
+    
+    tabSpec.addEventListener('click', () => {
+      // 切换标签样式
+      tabSpec.classList.add('border-primary', 'text-primary');
+      tabSpec.classList.remove('border-transparent', 'text-gray-500');
+      tabDetail.classList.add('border-transparent', 'text-gray-500');
+      tabDetail.classList.remove('border-primary', 'text-primary');
+      tabFaq.classList.add('border-transparent', 'text-gray-500');
+      tabFaq.classList.remove('border-primary', 'text-primary');
+      
+      // 切换内容显示
+      contentSpec.classList.remove('hidden');
+      contentDetail.classList.add('hidden');
+      contentFaq.classList.add('hidden');
+    });
+    
+    tabFaq.addEventListener('click', () => {
+      // 切换标签样式
+      tabFaq.classList.add('border-primary', 'text-primary');
+      tabFaq.classList.remove('border-transparent', 'text-gray-500');
+      tabDetail.classList.add('border-transparent', 'text-gray-500');
+      tabDetail.classList.remove('border-primary', 'text-primary');
+      tabSpec.classList.add('border-transparent', 'text-gray-500');
+      tabSpec.classList.remove('border-primary', 'text-primary');
+      
+      // 切换内容显示
+      contentFaq.classList.remove('hidden');
+      contentDetail.classList.add('hidden');
+      contentSpec.classList.add('hidden');
+    });
+    
+    // 根据URL参数加载不同产品信息
+    function getProductType() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('type') || 'electrode';
+    }
+    
+    // 产品数据
+    const productData = {
+      electrode: {
+        title: '手工电弧焊焊条',
+        breadcrumb: '手工电弧焊焊条',
+        img: 'https://picsum.photos/id/119/800/600',
+        price: '25.00',
+        desc: '适用于各种碳钢、低合金钢的焊接，具有优良的工艺性能和力学性能。电弧稳定，飞溅小，脱渣容易，焊缝成型美观。',
+        params: {
+          spec: 'J422, J507, J506',
+          diameter: '2.5mm, 3.2mm, 4.0mm, 5.0mm',
+          length: '300mm, 350mm, 400mm',
+          material: '低碳钢、低合金钢',
+          standard: 'GB/T 5117-2012'
+        },
+        detail: `
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">手工电弧焊焊条详细介绍</h3>
+          <p class="mb-4">
+            本系列手工电弧焊焊条采用优质原材料和先进工艺制造，具有以下特点：
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>电弧稳定，引弧容易，焊接过程中飞溅小</li>
+            <li>脱渣性能优良，焊缝成型美观</li>
+            <li>焊缝金属力学性能优良，符合国家标准</li>
+            <li>适用于各种位置的焊接，操作性能好</li>
+          </ul>
+          <p class="mb-4">
+            广泛应用于建筑、桥梁、机械制造、压力容器等行业的碳钢和低合金钢焊接。
+          </p>
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">使用注意事项</h4>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>焊条使用前应按规定温度烘干，烘干后应放在保温筒内随用随取</li>
+            <li>焊接前应清除焊件表面的油污、铁锈、水分等杂质</li>
+            <li>根据焊接母材和焊接位置选择合适的焊接电流</li>
+            <li>焊接时应采取适当的防护措施，防止弧光伤害和有害气体吸入</li>
+          </ul>
+        `,
+        specTable: `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J422</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥420</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥330</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥22</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J507</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥20</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-20℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">J506</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥20</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-20℃)</td>
+          </tr>
+        `,
+        faq: `
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 如何选择合适的焊条型号？</h4>
+            <p class="text-gray-600">A: 根据焊接母材的材质、焊接结构的强度要求、焊接环境和焊接位置来选择。低碳钢一般选用J422，低合金钢根据强度要求选用J506/J507等。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 焊条使用前为什么要烘干？</h4>
+            <p class="text-gray-600">A: 焊条药皮中含有水分，不烘干直接使用会导致焊缝产生气孔、裂纹等缺陷，影响焊接质量。酸性焊条一般烘干温度为75-150℃，碱性焊条为350-400℃。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 焊条的保质期是多久？</h4>
+            <p class="text-gray-600">A: 在干燥、通风、防潮的储存条件下，未开封的焊条保质期一般为2年。开封后应尽快使用，避免药皮吸潮。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 不同直径的焊条适用的焊接电流是多少？</h4>
+            <p class="text-gray-600">A: 2.5mm焊条：50-80A；3.2mm焊条：80-120A；4.0mm焊条：120-160A；5.0mm焊条：160-200A。具体电流可根据焊接位置和母材厚度适当调整。</p>
+          </div>
+        `
+      },
+      wire: {
+        title: '气体保护焊丝',
+        breadcrumb: '气体保护焊丝',
+        img: 'https://picsum.photos/id/225/800/600',
+        price: '38.00',
+        desc: '包括实芯焊丝和药芯焊丝，适用于MIG/MAG、TIG等焊接方法，飞溅小，成型美观，焊接效率高。',
+        params: {
+          spec: 'ER50-6, ER70S-6, E71T-1',
+          diameter: '0.8mm, 1.0mm, 1.2mm, 1.6mm',
+          length: '1000mm (盘装)',
+          material: '低碳钢、低合金钢、不锈钢',
+          standard: 'GB/T 8110-2020'
+        },
+        detail: `
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">气体保护焊丝详细介绍</h3>
+          <p class="mb-4">
+            气体保护焊丝是采用气体保护焊接工艺的专用焊丝，分为实芯焊丝和药芯焊丝两大类，具有以下特点：
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>焊接效率高，比手工电弧焊效率提高2-4倍</li>
+            <li>焊接飞溅小，焊缝成型美观，减少清理工作量</li>
+            <li>焊接变形小，适合焊接薄板和精密结构</li>
+            <li>适用多种焊接位置，操作灵活</li>
+          </ul>
+          <p class="mb-4">
+            广泛应用于汽车制造、工程机械、船舶制造、钢结构等行业的焊接。
+          </p>
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">使用注意事项</h4>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>根据焊接母材选择合适的焊丝型号和保护气体</li>
+            <li>焊丝使用前应清除表面的油污、锈蚀等杂质</li>
+            <li>保护气体流量应控制在15-25L/min，确保保护效果</li>
+            <li>焊接前应调整好送丝速度和焊接电压，保证焊接稳定</li>
+          </ul>
+        `,
+        specTable: `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ER50-6</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥420</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥22</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥47 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ER70S-6</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥550</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥450</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥25</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥60 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">E71T-1</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥490</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥22</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-20℃)</td>
+          </tr>
+        `,
+        faq: `
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 实芯焊丝和药芯焊丝有什么区别？</h4>
+            <p class="text-gray-600">A: 实芯焊丝需要配合保护气体使用，焊接飞溅小，成型好；药芯焊丝可自保护或配合保护气体，焊接效率更高，适应性更强，但飞溅相对较大。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 气体保护焊丝常用的保护气体有哪些？</h4>
+            <p class="text-gray-600">A: 常用的有纯CO₂、Ar+CO₂混合气体、纯Ar气等。低碳钢焊接一般采用80%Ar+20%CO₂混合气体，不锈钢焊接采用纯Ar气或Ar+少量O₂。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 焊丝的保存需要注意什么？</h4>
+            <p class="text-gray-600">A: 应存放在干燥、通风的库房内，避免潮湿和锈蚀。开封后的焊丝应尽快使用，长时间不用时应密封保存。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 如何选择焊丝的直径？</h4>
+            <p class="text-gray-600">A: 薄板焊接选用0.8-1.0mm直径，中厚板选用1.2-1.6mm直径。小直径焊丝焊接精度高，大直径焊丝焊接效率高。</p>
+          </div>
+        `
+      },
+      submerged: {
+        title: '埋弧焊焊材',
+        breadcrumb: '埋弧焊焊材',
+        img: 'https://picsum.photos/id/287/800/600',
+        price: '45.00',
+        desc: '由焊丝和焊剂组成，适用于中厚板的高效焊接，具有高熔敷率和优良的焊接质量，适合大批量焊接生产。',
+        params: {
+          spec: 'H08A, H08MnA, SJ101, SJ301',
+          diameter: '3.2mm, 4.0mm, 5.0mm, 6.0mm',
+          length: '500mm, 600mm (直条)',
+          material: '低碳钢、低合金钢、高强度钢',
+          standard: 'GB/T 12470-2020'
+        },
+        detail: `
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">埋弧焊焊材详细介绍</h3>
+          <p class="mb-4">
+            埋弧焊焊材由焊丝和焊剂组成，是一种高效的焊接材料，主要用于中厚板的焊接，具有以下特点：
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>焊接效率极高，熔敷率是手工电弧焊的5-10倍</li>
+            <li>焊接质量稳定，焊缝成型美观，力学性能优良</li>
+            <li>电弧埋在焊剂层下，无弧光辐射，作业环境好</li>
+            <li>适合自动化、机械化焊接，劳动强度低</li>
+          </ul>
+          <p class="mb-4">
+            广泛应用于压力容器、船舶、桥梁、钢结构等重型制造业的焊接。
+          </p>
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">使用注意事项</h4>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>焊丝和焊剂应匹配使用，不同牌号的焊剂适用于不同的焊丝和母材</li>
+            <li>焊剂使用前应在250-300℃下烘干2小时，去除水分</li>
+            <li>焊接前应清除焊件坡口及两侧的油污、铁锈、水分等杂质</li>
+            <li>根据板厚和焊接位置调整焊接参数，确保焊接质量</li>
+          </ul>
+        `,
+        specTable: `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">H08A+SJ401</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥420</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥330</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥22</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">H08MnA+SJ101</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥500</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥20</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥47 (-20℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">H10Mn2+SJ301</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥550</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥450</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥18</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥27 (-30℃)</td>
+          </tr>
+        `,
+        faq: `
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 埋弧焊焊剂的作用是什么？</h4>
+            <p class="text-gray-600">A: 焊剂的作用包括：机械保护作用（隔绝空气）、冶金处理作用（脱氧、脱硫、合金化）、改善焊接工艺性能（稳弧、造渣、成型）。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 埋弧焊为什么适合厚板焊接？</h4>
+            <p class="text-gray-600">A: 埋弧焊可以使用大电流焊接，熔深大，一次焊接可形成较厚的焊缝，减少焊接层数，提高焊接效率。同时焊接热输入大，适合厚板的焊接要求。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 埋弧焊的焊接参数如何调整？</h4>
+            <p class="text-gray-600">A: 主要调整焊接电流、电弧电压、焊接速度。电流决定熔深，电压决定焊缝宽度，速度影响焊接热输入和熔敷量。一般根据板厚和坡口形式确定。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 埋弧焊焊剂可以重复使用吗？</h4>
+            <p class="text-gray-600">A: 回收的焊剂经过筛选、去除杂质和重新烘干后可以重复使用，但性能会有所下降，重要结构焊接建议使用新焊剂。</p>
+          </div>
+        `
+      },
+      special: {
+        title: '特种焊材',
+        breadcrumb: '特种焊材',
+        img: 'https://picsum.photos/id/123/800/600',
+        price: '88.00',
+        desc: '包括不锈钢焊材、铸铁焊材、铜及铜合金焊材、铝及铝合金焊材等，适用于各种特殊材料的焊接需求。',
+        params: {
+          spec: 'ER308, ER316L, Z308, SCu6100A',
+          diameter: '1.0mm, 1.2mm, 2.5mm, 3.2mm',
+          length: '1000mm (盘装), 350mm (直条)',
+          material: '不锈钢、铸铁、铜合金、铝合金',
+          standard: 'GB/T 17853-2018'
+        },
+        detail: `
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">特种焊材详细介绍</h3>
+          <p class="mb-4">
+            特种焊材是针对特殊材质焊接需求设计的专用焊接材料，主要包括以下类别：
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>不锈钢焊材：适用于各类不锈钢的焊接，包括奥氏体、马氏体、铁素体不锈钢</li>
+            <li>铸铁焊材：用于铸铁件的修复和焊接，包括镍基铸铁焊条、钢芯铸铁焊条等</li>
+            <li>铜及铜合金焊材：适用于紫铜、黄铜、青铜等铜合金的焊接</li>
+            <li>铝及铝合金焊材：用于纯铝、铝合金的焊接，包括氩弧焊丝、气焊条等</li>
+          </ul>
+          <p class="mb-4">
+            广泛应用于化工、冶金、电力、航空航天等行业的特殊材料焊接。
+          </p>
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">使用注意事项</h4>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>根据母材材质和使用环境选择合适的特种焊材型号</li>
+            <li>焊接前应严格清理母材表面，去除氧化膜、油污等杂质</li>
+            <li>根据不同材质的焊接特性调整焊接工艺参数</li>
+            <li>部分特种焊材需要特殊的焊接保护措施，如氩气保护、预热等</li>
+          </ul>
+        `,
+        specTable: `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ER308</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥550</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥205</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥40</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥80 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ER316L</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥520</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥170</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥40</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥80 (0℃)</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Z308</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥240</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">≥3</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+          </tr>
+        `,
+        faq: `
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 不锈钢焊接为什么容易产生晶间腐蚀？</h4>
+            <p class="text-gray-600">A: 不锈钢焊接时，在450-850℃温度区间停留时间过长，会导致碳与铬结合形成碳化铬，使晶界贫铬，从而产生晶间腐蚀。选用低碳或超低碳焊材（如316L）可有效防止。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 铸铁焊接的主要难点是什么？</h4>
+            <p class="text-gray-600">A: 铸铁含碳量高，焊接时易产生白口组织、裂纹和气孔。主要措施：选用镍基等专用铸铁焊材，预热焊接（500-600℃），焊后缓冷，控制焊接热输入。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 铝合金焊接需要注意什么？</h4>
+            <p class="text-gray-600">A: 铝合金易氧化，形成高熔点的氧化铝膜，焊接前应彻底清除氧化膜；导热性好，需要较大的焊接热输入；易产生气孔，应使用高纯氩气保护。</p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-2">Q: 铜合金焊接常用的方法有哪些？</h4>
+            <p class="text-gray-600">A: 主要有氩弧焊、气焊、钎焊等。紫铜焊接一般采用氩弧焊，黄铜焊接可采用气焊（配合硼砂焊剂），青铜焊接可采用氩弧焊或焊条电弧焊。</p>
+          </div>
+        `
+      }
+    };
+    
+    // 加载产品数据
+    document.addEventListener('DOMContentLoaded', () => {
+      const productType = getProductType();
+      const product = productData[productType] || productData.electrode;
+      
+      // 更新页面内容
+      document.getElementById('product-title').textContent = product.title;
+      document.getElementById('product-breadcrumb').textContent = product.breadcrumb;
+      document.getElementById('product-main-img').src = product.img;
+      document.getElementById('product-main-img').alt = product.title;
+      document.getElementById('price-value').textContent = product.price;
+      document.getElementById('product-desc').textContent = product.desc;
+      
+      // 更新参数
+      document.getElementById('param-spec').textContent = product.params.spec;
+      document.getElementById('param-diameter').textContent = product.params.diameter;
+      document.getElementById('param-length').textContent = product.params.length;
+      document.getElementById('param-material').textContent = product.params.material;
+      document.getElementById('param-standard').textContent = product.params.standard;
+      
+      // 更新详情内容
+      document.getElementById('detail-content').innerHTML = product.detail;
+      
+      // 更新规格表
+      document.getElementById('spec-table').innerHTML = product.specTable;
+      
+      // 更新常见问题
+      document.getElementById('faq-content').innerHTML = product.faq;
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // 关闭移动菜单（如果打开）
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            menuToggle.querySelector('i').classList.remove('fa-times');
+            menuToggle.querySelector('i').classList.add('fa-bars');
+          }
+          
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
